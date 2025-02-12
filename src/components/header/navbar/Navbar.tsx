@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styles from "./navbar.module.scss";
-import Button from "../../reusables/Button";
 import { useNavigate } from "react-router-dom";
-import multisender from "../../../assets/multisender.png";
-import solana from "../../../assets/solana.png";
-import CButton from "../../reusables/CButton";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import Button from "@components/reusables/Button";
+import CButton from "@components/reusables/CButton";
+import multisender from "@assets/multisender.png";
+import solana from "@assets/solana.png";
 import {
   useWalletMultiButton,
   useWalletDisconnectButton,

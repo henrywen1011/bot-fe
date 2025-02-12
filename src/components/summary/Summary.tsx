@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import CButton from "@components/reusables/CButton";
 import styles from "./summary.module.scss";
-import CButton from "../reusables/CButton";
 
 const Summary = () => {
   const navigate = useNavigate();

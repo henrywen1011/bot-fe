@@ -2,12 +2,8 @@ import React, { forwardRef, memo, MouseEventHandler } from "react";
 import classnames from "classnames";
 import styled from "styled-components";
 import styles from "./CButton.module.scss";
-import {
-  ICButtonStyleProps,
-  BUTTON_TYPES,
-  NOOP,
-} from "../../../constants/types";
-import ButtonLoading from "../ButtonLoading";
+import { ICButtonStyleProps, BUTTON_TYPES, NOOP } from "@constants/types";
+import ButtonLoading from "@components/reusables/ButtonLoading";
 
 const StyledButton = styled.button<ICButtonStyleProps>`
   font-size: ${(props) => props.dynamicStyle?.fontSize}px;

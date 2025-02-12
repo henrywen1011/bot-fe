@@ -1,7 +1,7 @@
 import React, { forwardRef, memo } from "react";
 import classnames from "classnames";
 import styled from "styled-components";
-import { BUTTON_TYPES } from "../../constants/types";
+import { BUTTON_TYPES } from "@constants/types";
 
 // Define the button types for easier reuse
 

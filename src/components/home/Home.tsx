@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./home.module.scss";
 import AddressTextArea from "./AddressTextArea";
-import CButton from "../reusables/CButton";
-import CInput from "../reusables/CInput";
-import { BUTTON_TYPES } from "../../constants/types";
+import CButton from "@components/reusables/CButton";
+import CInput from "@components/reusables/CInput";
+import { BUTTON_TYPES } from "@constants/types";
 
 const Home = () => {
   const [tokenType, toggleTokenType] = useState("SOL");

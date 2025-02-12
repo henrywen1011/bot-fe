@@ -1,9 +1,8 @@
 import React from "react";
-import styles from "./Header.module.scss";
 import { Outlet } from "react-router-dom";
+import CButton from "@components/reusables/CButton";
 import Navbar from "./navbar/Navbar";
-import Button from "../reusables/Button";
-import CButton from "../reusables/CButton";
+import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
   return (

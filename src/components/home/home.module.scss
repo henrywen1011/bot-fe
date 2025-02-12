@@ -1,0 +1,66 @@
+@import "../../styles/variables.scss";
+
+.container {
+  @apply w-full h-[100svh] text-white flex flex-col gap-10 items-center;
+}
+
+.relativeContainer {
+  @apply flex font-medium flex-col relative w-full max-w-[50rem];
+}
+
+.selectBox {
+  @apply w-full cursor-pointer relative bg-[#232325] border p-2 px-4 border-[#14F195] rounded-[0.5rem] h-[56px] flex items-center;
+}
+
+.options {
+  @apply flex top-[5rem] flex-col bg-black z-[3] text-sm absolute w-full rounded-[0.5rem] border text-white border-[#14F195];
+
+  &_item {
+    color: $color-primary;
+    @apply px-4 py-4 cursor-pointer transition-all;
+
+    &:hover {
+      background-color: $color-input-bg;
+    }
+  }
+}
+
+.tokensList {
+  @apply flex flex-col gap-4 relative w-full max-w-[50rem];
+}
+
+.token {
+  @apply bg-[#14f195] p-2 px-4 rounded-[0.5rem] cursor-pointer;
+}
+
+.addressList {
+  @apply w-full border bg-[#232325] overflow-x-hidden h-[15rem] border-[#14F195] rounded-l-[0.5rem];
+}
+
+.row {
+  @apply flex gap-4 items-center;
+}
+
+.rowIndex {
+  @apply bg-[#111112] w-[3rem] flex justify-center text-[#6C6C61] p-2;
+}
+
+.inputField {
+  @apply bg-transparent w-[90%] outline-none;
+}
+
+.buttonContainer {
+  @apply w-full max-w-[50rem] flex justify-center;
+}
+
+.button {
+  @apply bg-[#14f195] w-[60%] rounded-[0.5rem] p-3 text-black font-medium;
+}
+
+.csvButton {
+  @apply border-x-[#14f195] border-t-[#14f195] flex gap-2 items-center text-[#14f195] rounded-t-[0.5rem] p-1 px-4 font-medium border-x border-t cursor-pointer;
+}
+
+.uploadButton {
+  @apply border-x border-b border-x-[#14f195] border-b-[#14f195] flex gap-2 items-center text-[#14f195] rounded-b-[0.5rem] p-1 px-4 font-medium cursor-pointer;
+}

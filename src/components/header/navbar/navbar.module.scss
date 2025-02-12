@@ -1,0 +1,56 @@
+/* navbar.module.scss */
+.navbar {
+  @apply md:flex hidden md:px-[5rem] w-full max-w-[80rem] lg:max-w-[90rem] p-8 justify-between items-center;
+}
+
+.navbarItem {
+  @apply text-white text-[0.85rem] flex items-center gap-2;
+}
+
+.logo {
+  @apply w-16;
+}
+
+.logoText {
+  @apply text-base;
+}
+
+.navLinks {
+  @apply flex gap-4;
+}
+
+.link {
+  @apply text-white font-medium cursor-pointer;
+}
+
+.productsDropdown {
+  @apply top-[2rem] z-[3] bg-black flex-col text-sm gap-2 flex absolute p-2 px-4 min-w-[12rem] rounded-[0.5rem] border text-white border-[#14F195];
+}
+
+.dropdownItem {
+  @apply hover:text-[#14F195] cursor-pointer transition-all;
+}
+
+.walletButton {
+  @apply p-2 px-4 min-w-[8rem] rounded-[0.8rem] border border-[#14F195] text-white font-medium;
+}
+
+.mainnetButton {
+  @apply p-2 justify-between flex items-center gap-1 cursor-pointer px-4 min-w-[8rem] rounded-[0.8rem] border text-white font-medium bg-[#232325] border-[#14F195];
+}
+
+.menuButton {
+  @apply focus:outline-none;
+}
+
+.mobileNavbar {
+  @apply md:hidden flex w-full p-4 bg-black justify-between items-center z-[1000];
+}
+
+.mobileMenu {
+  @apply fixed top-0 left-0 h-full w-[70%] bg-black text-white z-50 transform transition-transform duration-300 ease-in-out;
+}
+
+.overlay {
+  @apply fixed inset-0 bg-black opacity-50 z-40;
+}

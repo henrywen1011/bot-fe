@@ -1,14 +1,30 @@
-@import "../../styles/variables.scss";
+@use "../../styles/variables.scss" as variables;
 
 .container {
-  @apply w-full min-h-[100svh] text-white flex lg:flex-row flex-col gap-5 sm:p-5 p-1;
+  @apply min-h-[100vh] text-white flex flex-col gap-5 sm:p-5 p-1 w-[96%] sm:w-[88%] lg:w-[80%] xl:w-[70%] 2xl:w-[60%];
 
   &__group {
-    @apply flex flex-col flex-1 gap-5;
+    @apply flex flex-col gap-5;
   }
 
   .form_card {
-    @apply bg-[#24333c] p-5 lg:rounded-2xl rounded-lg min-h-[50vh];
+    @apply bg-[#24333c] p-5 lg:rounded-2xl rounded-lg;
+  }
+
+  .field_label {
+    @apply whitespace-nowrap text-[#8cffdd] min-w-[120px];
+  }
+
+  .field {
+    @apply flex sm:flex-row flex-col sm:items-center sm:justify-start justify-center gap-5 py-2;
+  }
+
+  .field_row {
+    @apply flex sm:flex-row flex-col sm:items-center sm:justify-start justify-center gap-5 py-5;
+  }
+
+  .field_col {
+    @apply flex flex-col justify-center gap-5 py-5;
   }
 }
 
@@ -17,18 +33,18 @@
 }
 
 .selectBox {
-  @apply w-full cursor-pointer relative bg-[#232325] border p-2 px-4 border-[#14F195] rounded-[0.5rem] h-[56px] flex items-center;
+  @apply w-full cursor-pointer relative bg-[#232325] border p-2 px-4 border-[#8cffdd] rounded-[0.5rem] h-[56px] flex items-center;
 }
 
 .options {
-  @apply flex top-[5rem] flex-col bg-black z-[3] text-sm absolute w-full rounded-[0.5rem] border text-white border-[#14F195];
+  @apply flex top-[5rem] flex-col bg-black z-[3] text-sm absolute w-full rounded-[0.5rem] border text-white border-[#8cffdd];
 
   &_item {
-    color: $color-primary;
+    color: variables.$color-primary;
     @apply px-4 py-4 cursor-pointer transition-all;
 
     &:hover {
-      background-color: $color-input-bg;
+      background-color: variables.$color-input-bg;
     }
   }
 }
@@ -38,11 +54,11 @@
 }
 
 .token {
-  @apply bg-[#14f195] p-2 px-4 rounded-[0.5rem] cursor-pointer;
+  @apply bg-[#8cffdd] p-2 px-4 rounded-[0.5rem] cursor-pointer;
 }
 
 .addressList {
-  @apply w-full border bg-[#232325] overflow-x-hidden h-[15rem] border-[#14F195] rounded-l-[0.5rem];
+  @apply w-full border bg-[#232325] overflow-x-hidden h-[15rem] border-[#8cffdd] rounded-l-[0.5rem];
 }
 
 .row {
@@ -62,13 +78,13 @@
 }
 
 .button {
-  @apply bg-[#14f195] w-[60%] rounded-[0.5rem] p-3 text-black font-medium;
+  @apply bg-[#8cffdd] w-[60%] rounded-[0.5rem] p-3 text-black font-medium;
 }
 
 .csvButton {
-  @apply border-x-[#14f195] border-t-[#14f195] flex gap-2 items-center text-[#14f195] rounded-t-[0.5rem] p-1 px-4 font-medium border-x border-t cursor-pointer;
+  @apply border-x-[#8cffdd] border-t-[#8cffdd] flex gap-2 items-center text-[#8cffdd] rounded-t-[0.5rem] p-1 px-4 font-medium border-x border-t cursor-pointer;
 }
 
 .uploadButton {
-  @apply border-x border-b border-x-[#14f195] border-b-[#14f195] flex gap-2 items-center text-[#14f195] rounded-b-[0.5rem] p-1 px-4 font-medium cursor-pointer;
+  @apply border-x border-b border-x-[#8cffdd] border-b-[#8cffdd] flex gap-2 items-center text-[#8cffdd] rounded-b-[0.5rem] p-1 px-4 font-medium cursor-pointer;
 }

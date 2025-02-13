@@ -23,7 +23,7 @@ const AddressTextArea = () => {
       }}
       className={
         styles.addressContainer +
-        " w-full border rounded-l-[0.5rem] border-[#14F195] overflow-hidden"
+        " w-full border rounded-l-[0.5rem] border-[#8cffdd] overflow-hidden"
       }
     >
       <div className="flex gap-2 h-[15rem] relative overflow-auto scrollbar-none inputField">

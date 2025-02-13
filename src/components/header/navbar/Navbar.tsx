@@ -5,7 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import Button from "@components/reusables/Button";
 import CButton from "@components/reusables/CButton";
-import multisender from "@assets/multisender.png";
+import logo from "@assets/logo.png";
 import solana from "@assets/solana.png";
 import {
   useWalletMultiButton,
@@ -36,10 +36,6 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    console.log(scrolling);
-  }, [scrolling]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -120,11 +116,8 @@ const Navbar = () => {
       {/* Desktop Navbar */}
       <div className={`${styles.navbar} ${scrolling ? styles.scrolled : ""}`}>
         <div className={styles.navbarItem}>
-          <img
-            src={multisender}
-            className={styles.logo}
-            alt="multisender logo"
-          />
+          <img src={logo} className={styles.logo} alt="multisender logo" />
+          <span className="sm:text-xl text-lg">Whales Hybrid Bot</span>
         </div>
 
         <span className="flex gap-4 items-center">
@@ -158,7 +151,7 @@ const Navbar = () => {
               <i className="fa-solid text-white fa-chevron-down"></i>
             </span>
             {showOptions.mainnet && (
-              <span className="flex flex-col gap-2 absolute z-[3] top-[3rem] p-2 px-4 min-w-[8rem] rounded-[0.8rem] border text-white font-medium border-[#14F195]">
+              <span className="flex flex-col gap-2 absolute z-[3] top-[3rem] p-2 px-4 min-w-[8rem] rounded-[0.8rem] border text-white font-medium border-[#8cffdd]">
                 <p className={styles.dropdownItem}>Mainnet</p>
                 <p className={styles.dropdownItem}>Devnet</p>
               </span>
@@ -169,7 +162,7 @@ const Navbar = () => {
 
       {/* Mobile Navbar */}
       <div className={styles.mobileNavbar}>
-        <img src={multisender} className={styles.logo} alt="multisender logo" />
+        <img src={logo} className={styles.logo} alt="multisender logo" />
         <Button customStyles={styles.menuButton} onClick={toggleMobileMenu}>
           <SVGIcon name={ICON_NAMES.HAMBURGER} />
         </Button>
@@ -186,7 +179,7 @@ const Navbar = () => {
             <p
               onClick={() => navigate(tab.link)}
               key={index}
-              className={"text-[#14f195]"}
+              className={"text-[#8cffdd]"}
             >
               {tab.name}
             </p>

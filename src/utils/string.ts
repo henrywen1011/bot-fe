@@ -1,6 +1,7 @@
 import { base64, hex } from "@scure/base";
 import BigNumber from "bignumber.js";
 import _ from "lodash";
+import { toast } from "react-toastify";
 
 const DEFAULT_PRECISION = 0;
 
@@ -308,3 +309,8 @@ export function stringToUint8Array(str: string): Uint8Array {
   }
   return uint8Array;
 }
+
+export const handleCopy = (txt: string) => {
+  navigator.clipboard.writeText(txt);
+  toast.success("Copied Address");
+};

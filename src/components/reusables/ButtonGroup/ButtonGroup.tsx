@@ -1,15 +1,28 @@
-import useGlobalContext from "@hooks/useGlobalContext";
-import styles from "./index.module.scss";
 import clx from "classnames";
-import useBodyScrollLock from "@hooks/useBodyScrollLock";
 import CButton from "../CButton";
+import styles from "./index.module.scss";
 
-const ButtonGroup: React.FC<{items: }> = () => {
-  const { isPageLoading } = useGlobalContext();
-
+const ButtonGroup: React.FC<{
+  titles: string[];
+  onClick: (id: number) => Promise<void>;
+  selectedIdx: number;
+  big?: boolean;
+  small?: boolean;
+}> = ({ titles = [], onClick, selectedIdx, big = false, small = false }) => {
   return (
     <div className={clx(styles.btn_group_container)}>
-      <CButton ></CButton>
+      {titles.map((_title, _id) => (
+        <CButton
+          tiny={small}
+          big={big}
+          filled
+          primary={_id === selectedIdx}
+          active={_id === selectedIdx}
+          onClick={() => onClick(_id)}
+        >
+          {_title}
+        </CButton>
+      ))}
     </div>
   );
 };

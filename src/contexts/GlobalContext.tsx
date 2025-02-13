@@ -29,8 +29,6 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     });
 
     return tpModals;
-    // console.log(tpModals);
-    // setModals(tpModals);
   };
 
   const [isLoading, setIsLoading] = useState(false);

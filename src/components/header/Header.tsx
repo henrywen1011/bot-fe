@@ -6,11 +6,9 @@ import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
   return (
-    <div
-      className={`${styles.headerContainer} relative bg-black overflow-hidden`}
-    >
+    <div className={styles.headerContainer}>
       <Navbar />
-      <div className="w-full h-auto flex justify-center p-2">
+      <div className="w-full h-auto flex justify-center p-2 pt-[100px]">
         <Outlet />
       </div>
       <div className="flex w-full border-t border-t-[#ffffff6c] justify-center">

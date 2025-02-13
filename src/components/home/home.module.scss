@@ -1,7 +1,15 @@
 @import "../../styles/variables.scss";
 
 .container {
-  @apply w-full h-[100svh] text-white flex flex-col gap-10 items-center;
+  @apply w-full min-h-[100svh] text-white flex lg:flex-row flex-col gap-5 sm:p-5 p-1;
+
+  &__group {
+    @apply flex flex-col flex-1 gap-5;
+  }
+
+  .form_card {
+    @apply bg-[#24333c] p-5 lg:rounded-2xl rounded-lg min-h-[50vh];
+  }
 }
 
 .relativeContainer {

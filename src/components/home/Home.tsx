@@ -1,138 +1,115 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./home.module.scss";
-import AddressTextArea from "./AddressTextArea";
 import CButton from "@components/reusables/CButton";
+import { MODAL_IDS } from "@constants/types";
+import CTable from "@components/reusables/CTable";
+import SVGIcon from "@components/reusables/SVGIcon";
+import { ICON_NAMES, ICON_SIZE } from "@constants/config";
+import useGlobalContext from "@hooks/useGlobalContext";
+import { getReducedText } from "@utils/string";
+import { useWallet } from "@solana/wallet-adapter-react";
 import CInput from "@components/reusables/CInput";
-import { BUTTON_TYPES } from "@constants/types";
+import { useState } from "react";
 
 const Home = () => {
-  const [tokenType, toggleTokenType] = useState("SOL");
-  const [showOptions, toggleOptionsView]: any = useState(false);
+  const { openModal } = useGlobalContext();
+  const { publicKey } = useWallet();
+  const [caEdit, setCAEdit] = useState(false);
 
-  const handleTokenType = (payload: string) => {
-    toggleTokenType(payload);
-    toggleOptionsView(false);
+  const walletColumns = [
+    {
+      name: "Address",
+      selector: (row: any) => row.address,
+    },
+    {
+      name: "SOL",
+      selector: (row: any) => row.sol,
+    },
+    {
+      name: "USD",
+      selector: (row: any) => row.usd,
+    },
+    {
+      name: "SPL",
+      selector: (row: any) => row.spl,
+    },
+  ];
+
+  const walletData = [
+    {
+      id: 0,
+      address: (
+        <span className="flex items-center gap-2 cursor-pointer">
+          {getReducedText(publicKey?.toString(), 4, 4)}{" "}
+          <SVGIcon name={ICON_NAMES.COPY} size={ICON_SIZE.SMALL} />
+        </span>
+      ),
+      sol: "1988",
+      usd: "Beetlejuice",
+      spl: "1988",
+    },
+  ];
+  const logColumns = [
+    {
+      name: "Time",
+      selector: (row: any) => row.time,
+    },
+    {
+      name: "Wallet Address	",
+      selector: (row: any) => row.address,
+    },
+    {
+      name: "Trading Behavior",
+      selector: (row: any) => row.behavior,
+    },
+  ];
+
+  const logData = [
+    {
+      id: 0,
+      address: (
+        <span className="flex items-center gap-2 cursor-pointer">
+          aaaaaaaaaaa <SVGIcon name={ICON_NAMES.COPY} size={ICON_SIZE.SMALL} />
+        </span>
+      ),
+      time: "1988",
+      behavior: "Beetlejuice",
+    },
+  ];
+
+  const openImportModal = () => {
+    openModal(MODAL_IDS.IMPORT_WALLET);
   };
 
-  const navigate = useNavigate();
-  const tokensString =
-    localStorage.getItem("tokens") || '["ABC", "DEF", "GHK"]';
-  const [tokens, toggleTokens] = useState(JSON.parse(tokensString));
-  const tokenInput: any = useRef(null);
-  const [tokendAddress, setTokenAddress] = useState("");
+  const handleUpdateCA = () => {
+    setCAEdit(!caEdit);
+    if (!caEdit) return;
+  };
 
   return (
     <div className={styles.container}>
-      <div
-        className={`fixed ${showOptions ? "w-screen h-screen" : null} z-[2]`}
-        onClick={() => toggleOptionsView(false)}
-      ></div>
-      <div className={styles.relativeContainer}>
-        <p>Token Type</p>
-        <div
-          className={styles.selectBox}
-          onClick={() => toggleOptionsView(!showOptions)}
-        >
-          {tokenType}
-          <i className="fa-solid fa-chevron-down text-white absolute right-2 top-1/2 transform -translate-y-1/2"></i>
-        </div>
-
-        {showOptions && (
-          <span className={styles.options}>
-            <p
-              onClick={() => handleTokenType("SOL")}
-              className={styles.options_item}
-            >
-              SOL
-            </p>
-            <p
-              onClick={() => handleTokenType("SPL Token")}
-              className={styles.options_item}
-            >
-              SPL Token
-            </p>
-          </span>
-        )}
-      </div>
-
-      {tokenType === "SPL Token" && (
-        <div className={styles.tokensList}>
-          <p className="font-medium">Token Address</p>
-          <CInput
-            placeholder="Enter your token address"
-            value={tokendAddress}
-            onChange={(value) => setTokenAddress(value)}
-            bordered
-            fill
-            large
-          />
-
-          <div className="flex w-full gap-2 flex-wrap">
-            {tokens.map((token: any, index: number) => (
-              <CButton
-                key={index + token}
-                small
-                primary
-                onClick={() => setTokenAddress(token)}
-                type={BUTTON_TYPES.PILLED}
-                className="text-white"
-              >
-                {token.slice(0, 4) +
-                  "..." +
-                  token.slice(token.length - 4, token.length)}
-              </CButton>
-              // <div
-              //   key={index}
-              //   onClick={() => setTokenAddress(token)}
-              //   className={styles.token}
-              // >
-              //   {token.slice(0, 4) +
-              //     "..." +
-              //     token.slice(token.length - 4, token.length)}
-              // </div>
-            ))}
+      <div className={styles.container__group}>
+        <div className={styles.form_card}>
+          <div className="flex flex-row items-center gap-5">
+            <span>CA</span>
+            <CInput fill disabled={!caEdit} />
+            <CButton small outline onClick={handleUpdateCA}>
+              {caEdit ? "Update" : "EDIT"}
+            </CButton>
           </div>
         </div>
-      )}
-
-      <div className={styles.relativeContainer}>
-        <div className="flex justify-between">
-          <p className="font-medium">List of Addresses in CSV</p>
-          <span className={styles.csvButton}>
-            <p>Example</p>
-            <i className="fa-regular fa-file"></i>
-          </span>
-        </div>
-        <AddressTextArea />
-        <div className="flex justify-between">
-          <p className="font-medium"></p>
-          <span className={styles.uploadButton}>
-            <p>Upload CSV</p>
-            <i className="fa-solid fa-upload"></i>
-          </span>
-        </div>
       </div>
-
-      <div className={styles.buttonContainer}>
-        <CButton
-          filled
-          big
-          primary
-          onClick={() => {
-            navigate("summary", { state: { token: tokendAddress } });
-          }}
-        >
-          Proceed
-        </CButton>
-        {/* <button
-          onClick={() =>
-            navigate("summary", { state: { token: tokenInput.current.value } })
-          }
-          className={styles.button}
-        >
-          Proceed
-        </button> */}
+      <div className={styles.container__group}>
+        <div className={styles.form_card}>
+          <div>
+            <CButton outline onClick={openImportModal}>
+              Import Wallet
+            </CButton>
+          </div>
+          <CTable columns={walletColumns} data={walletData} selectableRows />
+        </div>
+        <div className={styles.form_card}>
+          <CTable columns={logColumns} data={logData} />
+        </div>
       </div>
     </div>
   );

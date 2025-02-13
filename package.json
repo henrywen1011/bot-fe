@@ -19,9 +19,11 @@
     "bignumber.js": "^9.1.2",
     "classnames": "^2.5.1",
     "react": "^18.3.1",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
     "react-scroll": "^1.9.0",
+    "react-tooltip": "^5.28.0",
     "recharts": "^2.12.7",
     "sass": "^1.79.4",
     "styled-components": "^6.1.13"

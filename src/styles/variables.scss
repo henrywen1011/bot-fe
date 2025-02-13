@@ -7,6 +7,7 @@ $color-primary: #14f195;
 $color-dark-primary: #eeb91d;
 $color-orange: #f39718;
 $color-red: #f04438;
+$color-grey: #7a8482;
 
 $color-orange-filter: brightness(0) saturate(100%) invert(62%) sepia(54%)
   saturate(917%) hue-rotate(349deg) brightness(98%) contrast(95%);
@@ -17,9 +18,12 @@ $color-text-primary: $color-black;
 $color-text-secondary: #c2c2c2;
 $color-text-darkgray: #8f8f8f;
 
-$color-input-bg: rgb(35, 35, 37);
+$color-input-bg: #17242c;
 $color-input-border: $color-primary;
 
 $font-primary: "Sora", sans-serif;
 
 $animation1: 0.3s;
+
+$background-modal: rgba(0, 0, 0, 0.2);
+$primary-modal: rgba(255, 255, 255, 0.1);

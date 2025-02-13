@@ -1,8 +1,7 @@
-
 /* customStyles.css */
 
 .headerContainer {
-  @apply w-full bg-transparent flex flex-col items-center;
+  @apply w-full bg-transparent flex flex-col items-center relative bg-[#17242c] overflow-hidden;
 }
 
 .tabs {

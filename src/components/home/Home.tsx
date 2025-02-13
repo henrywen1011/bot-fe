@@ -1,138 +1,180 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./home.module.scss";
-import AddressTextArea from "./AddressTextArea";
 import CButton from "@components/reusables/CButton";
+import QRCode from "react-qr-code";
+import SVGIcon from "@components/reusables/SVGIcon";
+import { ICON_NAMES, ICON_SIZE } from "@constants/config";
+import useGlobalContext from "@hooks/useGlobalContext";
+import { getReducedText, handleCopy } from "@utils/string";
+import { useWallet } from "@solana/wallet-adapter-react";
 import CInput from "@components/reusables/CInput";
-import { BUTTON_TYPES } from "@constants/types";
+import { useState } from "react";
+import ButtonGroup from "@components/reusables/ButtonGroup";
+import { MODAL_IDS } from "@constants/types";
 
 const Home = () => {
-  const [tokenType, toggleTokenType] = useState("SOL");
-  const [showOptions, toggleOptionsView]: any = useState(false);
+  const { openModal } = useGlobalContext();
+  const { publicKey } = useWallet();
+  const [caEdit, setCAEdit] = useState(false);
+  const [botStarted, setBotStarted] = useState(false);
+  const [speedIdx, setSpeedIdx] = useState(0);
+  const [bundleIdx, setBundleIdx] = useState(0);
+  const speedItems = ["Turtle", "Slow", "Medium", "High", "Hyper"];
+  const bundleItems = ["0.1", "0.25", "0.5", "1"];
 
-  const handleTokenType = (payload: string) => {
-    toggleTokenType(payload);
-    toggleOptionsView(false);
+  const handleUpdateCA = () => {
+    setCAEdit(!caEdit);
+    if (!caEdit) return;
   };
 
-  const navigate = useNavigate();
-  const tokensString =
-    localStorage.getItem("tokens") || '["ABC", "DEF", "GHK"]';
-  const [tokens, toggleTokens] = useState(JSON.parse(tokensString));
-  const tokenInput: any = useRef(null);
-  const [tokendAddress, setTokenAddress] = useState("");
+  const clickSpeedItem = async (id: number) => {
+    setSpeedIdx(id);
+  };
+
+  const clickBundleItem = async (id: number) => {
+    setBundleIdx(id);
+  };
+
+  const openQRCodeModal = () => {
+    if (publicKey)
+      openModal(MODAL_IDS.QR_CODE, {
+        text: `https://solscan.io/account/${publicKey.toBase58()}`,
+      });
+  };
 
   return (
     <div className={styles.container}>
-      <div
-        className={`fixed ${showOptions ? "w-screen h-screen" : null} z-[2]`}
-        onClick={() => toggleOptionsView(false)}
-      ></div>
-      <div className={styles.relativeContainer}>
-        <p>Token Type</p>
-        <div
-          className={styles.selectBox}
-          onClick={() => toggleOptionsView(!showOptions)}
-        >
-          {tokenType}
-          <i className="fa-solid fa-chevron-down text-white absolute right-2 top-1/2 transform -translate-y-1/2"></i>
-        </div>
-
-        {showOptions && (
-          <span className={styles.options}>
-            <p
-              onClick={() => handleTokenType("SOL")}
-              className={styles.options_item}
-            >
-              SOL
-            </p>
-            <p
-              onClick={() => handleTokenType("SPL Token")}
-              className={styles.options_item}
-            >
-              SPL Token
-            </p>
-          </span>
-        )}
-      </div>
-
-      {tokenType === "SPL Token" && (
-        <div className={styles.tokensList}>
-          <p className="font-medium">Token Address</p>
-          <CInput
-            placeholder="Enter your token address"
-            value={tokendAddress}
-            onChange={(value) => setTokenAddress(value)}
-            bordered
-            fill
-            large
-          />
-
-          <div className="flex w-full gap-2 flex-wrap">
-            {tokens.map((token: any, index: number) => (
-              <CButton
-                key={index + token}
-                small
-                primary
-                onClick={() => setTokenAddress(token)}
-                type={BUTTON_TYPES.PILLED}
-                className="text-white"
+      {publicKey && (
+        <div className={styles.container__group}>
+          <div className={styles.form_card}>
+            <div className="flex md:flex-row flex-col-reverse gap-5">
+              <div className="flex-1">
+                <div className={styles.field}>
+                  <span className={styles.field_label}>Deposit Address:</span>
+                  <div className="flex gap-3 items-center">
+                    <span>{getReducedText(publicKey?.toString(), 12, 12)}</span>
+                    <CButton
+                      tiny
+                      onClick={() => handleCopy(publicKey.toBase58())}
+                    >
+                      <SVGIcon name={ICON_NAMES.COPY} size={ICON_SIZE.SMALL} />
+                    </CButton>
+                  </div>
+                </div>
+                <div className={styles.field}>
+                  <span className={styles.field_label}>Sol Balance:</span>
+                  <span>0</span>
+                </div>
+                <div className={styles.field}>
+                  <span className={styles.field_label}>$ODWH Balance:</span>
+                  <span>100K</span>
+                </div>
+              </div>
+              <div
+                className="p-3 bg-[#fff] self-center cursor-pointer"
+                onClick={openQRCodeModal}
               >
-                {token.slice(0, 4) +
-                  "..." +
-                  token.slice(token.length - 4, token.length)}
-              </CButton>
-              // <div
-              //   key={index}
-              //   onClick={() => setTokenAddress(token)}
-              //   className={styles.token}
-              // >
-              //   {token.slice(0, 4) +
-              //     "..." +
-              //     token.slice(token.length - 4, token.length)}
-              // </div>
-            ))}
+                <QRCode
+                  value={`https://solscan.io/account/${publicKey.toBase58()}`}
+                  size={150}
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}
+      <div className={styles.container__group}>
+        <div className={styles.form_card}>
+          <div className={`${styles.field_row} border-b border-[#fff3]`}>
+            <span className="whitespace-nowrap">Your current CA:</span>
+            {caEdit ? (
+              <CInput
+                containerClassName="max-w-[400px]"
+                disabled={!caEdit}
+                fill
+              />
+            ) : (
+              <span>
+                {publicKey ? (
+                  <div className="flex items-center">
+                    <span className="pr-2">
+                      {getReducedText(publicKey?.toString(), 12, 12)}{" "}
+                    </span>
+                    <CButton
+                      tiny
+                      onClick={() => handleCopy(publicKey.toBase58())}
+                    >
+                      <SVGIcon name={ICON_NAMES.COPY} size={ICON_SIZE.SMALL} />
+                    </CButton>
+                  </div>
+                ) : (
+                  "none"
+                )}
+              </span>
+            )}
 
-      <div className={styles.relativeContainer}>
-        <div className="flex justify-between">
-          <p className="font-medium">List of Addresses in CSV</p>
-          <span className={styles.csvButton}>
-            <p>Example</p>
-            <i className="fa-regular fa-file"></i>
-          </span>
-        </div>
-        <AddressTextArea />
-        <div className="flex justify-between">
-          <p className="font-medium"></p>
-          <span className={styles.uploadButton}>
-            <p>Upload CSV</p>
-            <i className="fa-solid fa-upload"></i>
-          </span>
-        </div>
-      </div>
+            <CButton small outline onClick={handleUpdateCA}>
+              {caEdit ? "Update" : "Edit"}
+            </CButton>
+          </div>
 
-      <div className={styles.buttonContainer}>
-        <CButton
-          filled
-          big
-          primary
-          onClick={() => {
-            navigate("summary", { state: { token: tokendAddress } });
-          }}
-        >
-          Proceed
-        </CButton>
-        {/* <button
-          onClick={() =>
-            navigate("summary", { state: { token: tokenInput.current.value } })
-          }
-          className={styles.button}
-        >
-          Proceed
-        </button> */}
+          <div className={`${styles.field_col} border-b border-[#fff3]`}>
+            <span className="whitespace-nowrap">Your current speed:</span>
+            <ButtonGroup
+              small
+              titles={speedItems}
+              selectedIdx={speedIdx}
+              onClick={clickSpeedItem}
+            />
+            <div className="text-[#c2c2c2]">
+              Speed options are an estimate as to how long 1 sol will last.
+              <br />
+              Times will vary depending on network congestion and buy amounts.
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm text-[#c2c2c2]">
+                Turtle: 1 SOL will last for 24 hours
+              </span>
+              <span className="text-sm text-[#c2c2c2]">
+                Slow: 1 SOL will last for 8 hours
+              </span>
+              <span className="text-sm text-[#c2c2c2]">
+                Medium: 1 SOL will last for 4 hours
+              </span>
+              <span className="text-sm text-[#c2c2c2]">
+                High: 1 SOL will last for 2 hours
+              </span>
+              <span className="text-sm text-[#c2c2c2]">
+                Hyper: 1 SOL will last for 30 minutes
+              </span>
+            </div>
+          </div>
+          <div className={`${styles.field_col} border-b border-[#fff3]`}>
+            <span className="whitespace-nowrap">Max bundle size (SOL):</span>
+            <ButtonGroup
+              small
+              titles={bundleItems}
+              selectedIdx={bundleIdx}
+              onClick={clickBundleItem}
+            />
+          </div>
+          <div className={styles.field_col}>
+            <div className="text-[#c2c2c2]">
+              You can pause bot and adjust speed/ buy amount at any time and
+              restart bot. You can not withdraw your sol after bot starts. You
+              can top off bot with sol at any time
+            </div>
+            <CButton
+              onClick={() => {
+                setBotStarted(!botStarted);
+              }}
+              filled
+              primary={!botStarted}
+              warn={botStarted}
+            >
+              {botStarted ? "Stop Bot" : "Start Bot"}
+            </CButton>
+          </div>
+        </div>
       </div>
     </div>
   );

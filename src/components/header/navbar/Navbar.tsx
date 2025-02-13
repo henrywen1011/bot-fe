@@ -1,18 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./navbar.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import Button from "@components/reusables/Button";
 import CButton from "@components/reusables/CButton";
-import multisender from "@assets/multisender.png";
+import logo from "@assets/logo.png";
 import solana from "@assets/solana.png";
 import {
   useWalletMultiButton,
   useWalletDisconnectButton,
 } from "@solana/wallet-adapter-base-ui";
+import { getReducedText } from "@utils/string";
+import SVGIcon from "@components/reusables/SVGIcon";
+import { ICON_NAMES } from "@constants/config";
 
 const Navbar = () => {
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const scrollThreshold = 50;
+
+      if (scrollY > scrollThreshold) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const { publicKey } = useWallet();
   const { setVisible: setModalVisible } = useWalletModal();
   const { onButtonClick: disconnectSolWallet } = useWalletDisconnectButton();
@@ -29,9 +60,18 @@ const Navbar = () => {
   });
 
   const tabs = [
-    { name: "Multisend", link: "/", scrollElement: "", active: false },
-    { name: "Verification", link: "/", scrollElement: "", active: false },
-    { name: "FAQ", link: "/", scrollElement: "", active: false },
+    {
+      name: "$ODWH Group",
+      link: "https://t.me/OldDogWifHatMeme",
+    },
+    {
+      name: "Pump.fun Volume Bot",
+      link: "https://t.me/whales_pumpfun_bot ",
+    },
+    {
+      name: "Airdrop Bot",
+      link: "https://t.me/Whales_airdrop_bot",
+    },
   ];
 
   const toggleMobileMenu = () => {
@@ -57,6 +97,12 @@ const Navbar = () => {
     }
   };
 
+  const handleDisconnect = (e: any) => {
+    if (publicKey && disconnectSolWallet) {
+      disconnectSolWallet();
+    }
+  };
+
   return (
     <>
       <div
@@ -68,55 +114,35 @@ const Navbar = () => {
         onClick={() => toggleOptionsView({ mainnet: false, products: false })}
       ></div>
       {/* Desktop Navbar */}
-      <div className={styles.navbar}>
+      <div className={`${styles.navbar} ${scrolling ? styles.scrolled : ""}`}>
         <div className={styles.navbarItem}>
-          <img
-            src={multisender}
-            className={styles.logo}
-            alt="multisender logo"
-          />
-          <div className="flex flex-col justify-between">
-            <h2 className={styles.logoText}>Multisender</h2>
-            <img src={solana} className="w-[4rem]" alt="solana" />
-          </div>
+          <img src={logo} className={styles.logo} alt="multisender logo" />
+          <span className="sm:text-xl text-lg">Whales Hybrid Bot</span>
         </div>
-        <span className={styles.navLinks}>
-          <span className="relative flex gap-1">
-            <span className="flex items-center gap-2">
-              <p
-                onClick={() => handleOptions("products")}
-                className={styles.link}
-              >
-                Products
-              </p>
-              <i className="fa-solid text-white fa-chevron-down"></i>
-            </span>
-            {showOptions.products && (
-              <span className={styles.productsDropdown}>
-                <p className={styles.dropdownItem}>Classic Multisender ↗</p>
-                <p className={styles.dropdownItem}>TON Multisender ↗</p>
-                <p className={styles.dropdownItem}>TRON Multisender ↗</p>
-                <p className={styles.dropdownItem}>NFT Multisender ↗</p>
-                <p className={styles.dropdownItem}>Massdrop Multisender ↗</p>
-              </span>
-            )}
-          </span>
-          {tabs.map((tab, index) => (
-            <p
-              onClick={() => navigate(tab.link)}
-              className={styles.link}
-              key={index}
-            >
-              {tab.name}
-            </p>
-          ))}
-        </span>
+
         <span className="flex gap-4 items-center">
-          <CButton onClick={handleConnectWallet} outline>
-            Connect Wallet
-          </CButton>
+          <span className={styles.navLinks}>
+            {tabs.map((tab, index) => (
+              <p
+                onClick={() => navigate(tab.link)}
+                className={styles.link}
+                key={index}
+              >
+                {tab.name}
+              </p>
+            ))}
+          </span>
+          {publicKey ? (
+            <CButton onClick={handleDisconnect} outline>
+              {getReducedText(publicKey.toBase58(), 5, 5)}
+            </CButton>
+          ) : (
+            <CButton onClick={handleConnectWallet} outline>
+              Connect Wallet
+            </CButton>
+          )}
           {/* <Button customStyles={styles.walletButton}>Select Wallet</Button> */}
-          <div className="flex flex-col relative">
+          {/* <div className="flex flex-col relative">
             <span
               onClick={() => handleOptions("mainnet")}
               className={styles.mainnetButton}
@@ -125,23 +151,20 @@ const Navbar = () => {
               <i className="fa-solid text-white fa-chevron-down"></i>
             </span>
             {showOptions.mainnet && (
-              <span className="flex flex-col gap-2 absolute z-[3] top-[3rem] p-2 px-4 min-w-[8rem] rounded-[0.8rem] border text-white font-medium border-[#14F195]">
+              <span className="flex flex-col gap-2 absolute z-[3] top-[3rem] p-2 px-4 min-w-[8rem] rounded-[0.8rem] border text-white font-medium border-[#8cffdd]">
                 <p className={styles.dropdownItem}>Mainnet</p>
                 <p className={styles.dropdownItem}>Devnet</p>
               </span>
             )}
-          </div>
+          </div> */}
         </span>
       </div>
 
       {/* Mobile Navbar */}
       <div className={styles.mobileNavbar}>
+        <img src={logo} className={styles.logo} alt="multisender logo" />
         <Button customStyles={styles.menuButton} onClick={toggleMobileMenu}>
-          <div className="space-y-2">
-            <div className="w-8 h-0.5 bg-white"></div>
-            <div className="w-8 h-0.5 bg-white"></div>
-            <div className="w-8 h-0.5 bg-white"></div>
-          </div>
+          <SVGIcon name={ICON_NAMES.HAMBURGER} />
         </Button>
       </div>
 
@@ -156,7 +179,7 @@ const Navbar = () => {
             <p
               onClick={() => navigate(tab.link)}
               key={index}
-              className={tab.active ? "text-yellow-500" : "text-white"}
+              className={"text-[#8cffdd]"}
             >
               {tab.name}
             </p>

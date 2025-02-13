@@ -94,7 +94,6 @@ const CInput: React.FC<{
   const handleOnChange = (e: any) => {
     if (onlyNumbers || onlyInteger) {
       const numberText = forceNumeric(e.target.value);
-      console.log("=======>", e.target.value, numberText);
 
       if (isValidNumber(numberText, precision + 1, onlyInteger)) {
         const input = e.target;

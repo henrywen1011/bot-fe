@@ -4,13 +4,16 @@ import { BrowserRouter } from "react-router-dom";
 import WalletAdapter from "@contexts/WalletContext.tsx";
 import App from "./App.tsx";
 import "@styles/index.scss";
+import GlobalProvider from "@contexts/GlobalContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <WalletAdapter>
-        <App />
-      </WalletAdapter>
+      <GlobalProvider>
+        <WalletAdapter>
+          <App />
+        </WalletAdapter>
+      </GlobalProvider>
     </BrowserRouter>
   </StrictMode>
 );

@@ -6,19 +6,15 @@ import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
   return (
-    <div
-      className={`${styles.headerContainer} relative bg-black overflow-hidden`}
-    >
+    <div className={styles.headerContainer}>
       <Navbar />
-      <div className="w-full h-auto flex justify-center p-2">
+      <div className="w-full h-auto flex justify-center p-2 pt-[100px]">
         <Outlet />
       </div>
       <div className="flex w-full border-t border-t-[#ffffff6c] justify-center">
         <div className="w-full justify-between flex items-center p-4 px-10 max-w-[80rem] font-medium">
           <span className="flex text-white items-center gap-4">
-            <p>Version: c992d7b</p>
-            <CButton outline>Connect Wallet</CButton>
-            {/* <Button customStyles="bg-[#14f195] rounded-[0.5rem] p-2 px-4 text-base text-black font-medium">
+            {/* <Button customStyles="bg-[#8cffdd] rounded-[0.5rem] p-2 px-4 text-base text-black font-medium">
               Connect Wallet
             </Button> */}
           </span>

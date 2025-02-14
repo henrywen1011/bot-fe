@@ -14,9 +14,12 @@ import {
 import { getReducedText } from "@utils/string";
 import SVGIcon from "@components/reusables/SVGIcon";
 import { ICON_NAMES } from "@constants/config";
+import useGlobalContext from "@hooks/useGlobalContext";
+import { MODAL_IDS } from "@constants/types";
 
 const Navbar = () => {
   const [scrolling, setScrolling] = useState(false);
+  const { openModal } = useGlobalContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -120,17 +123,27 @@ const Navbar = () => {
           <span className="sm:text-xl text-lg">Whales Hybrid Bot</span>
         </div>
 
-        <span className="flex gap-4 items-center">
+        <span className="flex gap-4 items-center ">
           <span className={styles.navLinks}>
             {tabs.map((tab, index) => (
               <p
-                onClick={() => navigate(tab.link)}
+                onClick={() => {
+                  window.open(tab.link, "_blank");
+                }}
                 className={styles.link}
                 key={index}
               >
                 {tab.name}
               </p>
             ))}
+            <p
+              onClick={() => {
+                openModal(MODAL_IDS.HELP);
+              }}
+              className={styles.link}
+            >
+              About Us
+            </p>
           </span>
           {publicKey ? (
             <CButton onClick={handleDisconnect} outline>

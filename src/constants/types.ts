@@ -38,6 +38,7 @@ export interface ISVGIconProps extends React.HTMLAttributes<HTMLDivElement> {
 export const MODAL_IDS = {
   IMPORT_WALLET: "import-wallet-modal",
   QR_CODE: "qr-code-modal",
+  HELP: "help-modal",
 };
 
 export type MODAL_IDS_KEYS = keyof typeof MODAL_IDS;

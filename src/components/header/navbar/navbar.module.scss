@@ -20,7 +20,7 @@
 }
 
 .navLinks {
-  @apply flex gap-4;
+  @apply flex gap-4 whitespace-nowrap;
 }
 
 .link {

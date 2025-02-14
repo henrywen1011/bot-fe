@@ -1,3 +1,4 @@
+import HelpModal from "./HelpModal";
 import TokenSelectModal from "./ImportWalletModal";
 import QRCodeModal from "./QRCodeModal";
 
@@ -6,6 +7,7 @@ const ModalsContainer = () => {
     <>
       <TokenSelectModal />
       <QRCodeModal />
+      <HelpModal />
     </>
   );
 };
